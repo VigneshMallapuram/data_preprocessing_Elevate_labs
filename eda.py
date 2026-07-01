@@ -45,3 +45,23 @@ plt.title("Fare")
 
 plt.tight_layout()
 plt.show()
+
+def remove_outliers(data, column):
+    Q1 = data[column].quantile(0.25)
+    Q3 = data[column].quantile(0.75)
+    IQR = Q3 - Q1
+
+    lower=Q1-1.5 * IQR
+    upper=Q3+1.5*IQR
+
+    return data[(data[column] >= lower) & (data[column] <= upper)]
+
+df = remove_outliers(df, "Age")
+df = remove_outliers(df, "Fare")
+
+print("Shape after removing outliers:", df.shape)
+
+print(df.head())
+
+print("\nFinal Dataset Information:")
+print(df.info())
